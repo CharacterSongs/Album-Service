@@ -4,7 +4,7 @@ namespace AlbumService.Dtos
 {
     public class AlbumCreateDto
     {
-        [Required]
         public string Name { get; set; }
+        public DateTime ReleaseDate{get;set;}
     }
 }

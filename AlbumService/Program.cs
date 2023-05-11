@@ -1,8 +1,19 @@
+using AlbumService.AsyncDataServices;
+using AlbumService.Data;
+using AlbumService.EventProcessing;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<AppDbContext>(opt=> opt.UseInMemoryDatabase("InMem"));
 builder.Services.AddControllers();
+
+builder.Services.AddHostedService<MessageBusSubscriber>();
+
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IAlbumRepo, AlbumRepo>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

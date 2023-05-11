@@ -40,6 +40,10 @@ namespace AlbumService.Data
         {
             return _context.Artists.ToList();
         }
+        public bool ExternalArtistExits(int externalArtistId)
+        {
+            return _context.Artists.Any(ar => ar.ExternalId == externalArtistId);
+        }
 
         public Album GetAlbum(int ArtistId, int AlbumId)
         {

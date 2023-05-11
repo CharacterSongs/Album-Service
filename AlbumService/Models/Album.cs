@@ -11,6 +11,8 @@ namespace AlbumService.Models
         public string Name {get; set;}
         [Required]
         public int ArtistId {get; set;}
+        [Required]
+        public DateTime ReleaseDate {get; set;}
         public Artist Artist {get; set;}
     }
 }

@@ -1,3 +1,6 @@
+using AlbumService.Data;
+using AlbumService.Dtos;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlbumService.Controllers
@@ -6,9 +9,22 @@ namespace AlbumService.Controllers
     [ApiController]
     public class ArtistController : ControllerBase
     {
-        public ArtistController()
+        private readonly IAlbumRepo _repository;
+        private readonly IMapper _mapper;
+        public ArtistController(IAlbumRepo repository, IMapper mapper)
         {
+            _repository = repository;
+            _mapper = mapper;
+        }
 
+        [HttpGet]
+        public ActionResult<IEnumerable<ArtistreadDto>> GetArtists()
+        {
+            Console.WriteLine("--> Getting Artists from AlbumsService");
+
+            var artistItems = _repository.GetAllArtists();
+
+            return Ok(_mapper.Map<IEnumerable<ArtistreadDto>>(artistItems));
         }
 
         [HttpPost]
