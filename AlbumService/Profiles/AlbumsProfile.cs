@@ -1,7 +1,7 @@
 using AutoMapper;
 using AlbumService.Dtos;
 using AlbumService.Models;
-//using ArtistService;
+using ArtistService;
 
 namespace AlbumService.Profiles
 {
@@ -15,10 +15,10 @@ namespace AlbumService.Profiles
             CreateMap<Album, AlbumReadDto>();
             CreateMap<ArtistPublishedDto, Artist>()
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.Id));
-            //CreateMap<GrpcArtistModel, Artist>()
-            //    .ForMember(dest => dest.ExternalID, opt => opt.MapFrom(src => src.ArtistId))
-            //    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            //    .ForMember(dest => dest.Albums, opt => opt.Ignore());
+            CreateMap<GrpcArtistModel, Artist>()
+                .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.ArtistId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Albums, opt => opt.Ignore());
         }
     }
 }

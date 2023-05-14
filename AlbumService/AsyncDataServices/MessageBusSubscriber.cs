@@ -35,9 +35,9 @@ namespace AlbumService.AsyncDataServices
                 exchange: "trigger",
                 routingKey: "");
 
-            Console.WriteLine("--> Listenting on the Message Bus...");
+            Console.WriteLine("--> Listening on the Message Bus...");
 
-            _connection.ConnectionShutdown += RabbitMQ_ConnectionShitdown;
+            _connection.ConnectionShutdown += RabbitMQ_ConnectionShutdown;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -61,7 +61,7 @@ namespace AlbumService.AsyncDataServices
             return Task.CompletedTask;
         }
 
-        private void RabbitMQ_ConnectionShitdown(object sender, ShutdownEventArgs e)
+        private void RabbitMQ_ConnectionShutdown(object sender, ShutdownEventArgs e)
         {
             Console.WriteLine("--> Connection Shutdown");
         }
