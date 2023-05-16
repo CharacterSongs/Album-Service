@@ -18,9 +18,18 @@ namespace AlbumService.Controllers
             _repository = repository;
             _mapper = mapper;
         }
+        
+        [Route("api/[controller]")]
+        [HttpGet(Name = "GetAlbums")]
+        public ActionResult<IEnumerable<AlbumReadDto>> GetAlbums()
+        {
+            var Albums = _repository.GetAlbums();
 
+            return Ok(_mapper.Map<IEnumerable<AlbumReadDto>>(Albums));
+        }
+        
         [HttpGet]
-        public ActionResult<IEnumerable<AlbumReadDto>> GetAlbumsForArtist(int artistId)
+        public ActionResult<IEnumerable<AlbumReadDto>> GetAlbumsForArtist(Guid artistId)
         {
             Console.WriteLine($"--> Hit GetAlbumsForArtist: {artistId}");
 
@@ -35,7 +44,7 @@ namespace AlbumService.Controllers
         }
 
         [HttpGet("{AlbumId}", Name = "GetAlbumForArtist")]
-        public ActionResult<AlbumReadDto> GetAlbumForArtist(int artistId, int AlbumId)
+        public ActionResult<AlbumReadDto> GetAlbumForArtist(Guid artistId, Guid AlbumId)
         {
             Console.WriteLine($"--> Hit GetAlbumForartist: {artistId} / {AlbumId}");
 
@@ -55,7 +64,7 @@ namespace AlbumService.Controllers
         }
 
         [HttpPost]
-        public ActionResult<AlbumReadDto> CreateAlbumForArtist(int artistId, AlbumCreateDto AlbumDto)
+        public ActionResult<AlbumReadDto> CreateAlbumForArtist(Guid artistId, AlbumCreateDto AlbumDto)
         {
             Console.WriteLine($"--> Hit CreateAlbumForArtist: {artistId}");
 
@@ -74,6 +83,17 @@ namespace AlbumService.Controllers
             return CreatedAtRoute(nameof(GetAlbumForArtist),
                 new { artistId = artistId, albumId = albumReadDto.Id }, albumReadDto);
         }
+        [HttpDelete]
+        public ActionResult DeleteAlbums(Guid albumId)
+        {
+            if (!_repository.AlbumExists(albumId))
+            {
+                return NotFound();
+            }
 
+            _repository.DeleteAlbum(albumId);
+
+            return NoContent();
+        }
     }
 }

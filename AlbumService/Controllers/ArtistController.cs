@@ -26,7 +26,20 @@ namespace AlbumService.Controllers
 
             return Ok(_mapper.Map<IEnumerable<ArtistreadDto>>(artistItems));
         }
+        [HttpDelete("{artistId}", Name = "DeleteAlbumsForArtist")]
+        public ActionResult DeleteAlbumsForArtist(Guid artistId)
+        {
+            Console.WriteLine($"--> Hit DeleteAlbumsForArtist: {artistId}");
 
+            if (!_repository.ArtistExits(artistId))
+            {
+                return NotFound();
+            }
+
+            _repository.DeleteAllArtistsAlbums(artistId);
+            _repository.SaveChanges();
+            return NoContent();
+        }
         [HttpPost]
         public ActionResult TestInboundCOnnection()
         {

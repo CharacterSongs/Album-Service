@@ -10,12 +10,16 @@ namespace AlbumService.Data
         // Artists
         IEnumerable<Artist> GetAllArtists();
         void CreateArtist(Artist plat);
-        bool ArtistExits(int ArtistId);
-        bool ExternalArtistExists(int externalArtistId);
+        bool ArtistExits(Guid ArtistId);
+        bool ExternalArtistExists(Guid externalArtistId);
 
         // Albums
-        IEnumerable<Album> GetAlbumsForArtist(int ArtistId);
-        Album GetAlbum(int ArtistId, int AlbumId);
-        void CreateAlbum(int ArtistId, Album Album);
+        IEnumerable<Album> GetAlbumsForArtist(Guid ArtistId);
+        Album GetAlbum(Guid ArtistId, Guid AlbumId);
+        IEnumerable<Album> GetAlbums();
+        void CreateAlbum(Guid ArtistId, Album Album);
+        void DeleteAlbum(Guid AlbumId);
+        void DeleteAllArtistsAlbums(Guid ArtistId);
+        bool AlbumExists(Guid albumId);
     }
 }
